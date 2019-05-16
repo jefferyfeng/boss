@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.modules.permission.dao.SysUserDao">
+    <!--表名-->
+    <sql id="table_name">sys_user</sql>
+
+    <!--插入字段集合-->
+    <sql id="Base_Column_List">
+        id, 
+        username, 
+        sex, 
+        email, 
+        password, 
+        phone, 
+        salt, 
+        status, 
+        is_valid, 
+        create_date, 
+        create_user, 
+        update_date, 
+        update_user
+    </sql>
+    <!--查询字段集合-->
+    <sql id="Base_Column_List_AsType">
+        id as id, 
+        username as username, 
+        sex as sex, 
+        email as email, 
+        password as password, 
+        phone as phone, 
+        salt as salt, 
+        status as status, 
+        is_valid as isValid, 
+        create_date as createDate, 
+        create_user as createUser, 
+        update_date as updateDate, 
+        update_user as updateUser
+    </sql>
+
+    <!-- 用户数据表格map -->
+    <resultMap id="userMap" type="com.demo.modules.per.model.UserVo">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="sex" column="sex"></result>
+        <result property="email" column="email"></result>
+        <!--<result property="password" column="password"></result>-->
+        <result property="phone" column="phone"></result>
+        <!--<result property="salt" column="salt"></result>-->
+        <result property="status" column="status"></result>
+        <!--<result property="isValid" column="isValid"></result>-->
+        <result property="createDate" column="createDate"></result>
+        <!--<result property="createUser" column="createUser"></result>-->
+        <!--<result property="updateDate" column="updateDate"></result>-->
+        <!--<result property="updateUser" column="updateUser"></result>-->
+        <collection property="rolesList" ofType="com.demo.modules.per.model.RoleVo">
+            <id property="id" column="roleId"></id>
+            <result property="roleName" column="roleName"></result>
+            <result property="description" column="roleDescription"></result>
+            <result property="status" column="roleStatus"></result>
+        </collection>
+    </resultMap>
+
+    <!-- 增加一个实体 -->
+    <insert id="insert" parameterType="com.demo.modules.permission.entity.SysUser">
+        <!-- 针对mysql使用-->
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into <include refid="table_name" />
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                username,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="salt != null">
+                salt,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="isValid != null">
+                is_valid,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="updateUser != null">
+                update_user
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                #{username},
+            </if>
+            <if test="sex != null">
+                #{sex},
+            </if>
+            <if test="email != null">
+                #{email},
+            </if>
+            <if test="password != null">
+                #{password},
+            </if>
+            <if test="phone != null">
+                #{phone},
+            </if>
+            <if test="salt != null">
+                #{salt},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="isValid != null">
+                #{isValid},
+            </if>
+            <if test="createDate != null">
+                #{createDate},
+            </if>
+            <if test="createUser != null">
+                #{createUser},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键删除一个实体 -->
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from <include refid="table_name" />
+        where id = #{id}
+    </delete>
+
+    <!-- 更新一个实体 -->
+    <update id="update" parameterType="com.demo.modules.permission.entity.SysUser">
+        update <include refid="table_name" />
+        set
+        <if test="username != null">
+            username = #{username},
+        </if>
+        <if test="sex != null">
+            sex = #{sex},
+        </if>
+        <if test="email != null">
+            email = #{email},
+        </if>
+        <if test="password != null">
+            password = #{password},
+        </if>
+        <if test="phone != null">
+            phone = #{phone},
+        </if>
+        <if test="salt != null">
+            salt = #{salt},
+        </if>
+        <if test="status != null">
+            status = #{status},
+        </if>
+        <if test="isValid != null">
+            is_valid = #{isValid},
+        </if>
+        <if test="createDate != null">
+            create_date = #{createDate},
+        </if>
+        <if test="createUser != null">
+            create_user = #{createUser},
+        </if>
+        <if test="updateDate != null">
+            update_date = #{updateDate},
+        </if>
+        <if test="updateUser != null">
+            update_user = #{updateUser}
+        </if>
+        where id = #{id}
+    </update>
+
+    <!-- 根据主键查询一个实体 -->
+    <select id="queryOne" parameterType="java.lang.Long"  resultType="com.demo.modules.permission.entity.SysUser">
+        select
+        <include refid="Base_Column_List_AsType" />
+        from <include refid="table_name" />
+        where id = #{id}
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="queryAll" resultType="com.demo.modules.permission.entity.SysUser">
+        select
+        <include refid="Base_Column_List_AsType" />
+        from <include refid="table_name" />
+        where is_valid = '1'
+    </select>
+
+    <!-- 根据字段查询 带分页 -->
+    <select id="queryByFieldsAndPage" resultType="com.demo.modules.permission.entity.SysUser">
+        select
+        <include refid="Base_Column_List_AsType" />
+        from <include refid="table_name" />
+        where is_valid = '1'
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="username != null">
+            and username = #{username}
+        </if>
+        <if test="sex != null">
+            and sex = #{sex}
+        </if>
+        <if test="email != null">
+            and email = #{email}
+        </if>
+        <if test="password != null">
+            and password = #{password}
+        </if>
+        <if test="phone != null">
+            and phone = #{phone}
+        </if>
+        <if test="salt != null">
+            and salt = #{salt}
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        <if test="isValid != null">
+            and is_valid = #{isValid}
+        </if>
+        <if test="createDate != null">
+            and create_date = #{createDate}
+        </if>
+        <if test="createUser != null">
+            and create_user = #{createUser}
+        </if>
+        <if test="updateDate != null">
+            and update_date = #{updateDate}
+        </if>
+        <if test="updateUser != null">
+            and update_user = #{updateUser}
+        </if>
+        <if test="pageBean.begin != null">
+            limit #{pageBean.begin} , #{pageBean.pageSize}
+        </if>
+    </select>
+
+    <!-- 批量修改状态 -->
+    <update id="batchModifyStatus">
+        update <include refid="table_name"></include>
+        set
+        <trim suffixOverrides=",">
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="userId != null">
+                update_user = #{userId},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+        </trim>
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <!-- 批量删除（逻辑删除） -->
+    <update id="batchRemove">
+        update <include refid="table_name"></include>
+        set
+        <trim suffixOverrides=",">
+            <if test="isValid != null">
+                is_valid = #{isValid},
+            </if>
+            <if test="userId != null">
+                update_user = #{userId},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+        </trim>
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="countListUsers" resultType="java.lang.Integer">
+        select count(t1.id)
+        from (select * from <include refid="table_name"></include> where is_valid = 1) t1
+        left join (select * from sys_user_role where is_valid = 1) t2 on t1.id = t2.user_id
+        left join (select * from sys_role where is_valid = 1) t3 on t2.role_id = t3.id
+        <where>
+            <if test="user.id != null">
+                and t1.id like concat('%',#{user.id},'%')
+            </if>
+            <if test="user.username != null">
+                and t1.username like concat('%',#{user.username},'%')
+            </if>
+            <if test="user.sex != null">
+                and t1.sex = #{user.sex}
+            </if>
+            <if test="user.email != null">
+                and t1.email like concat('%',#{user.email},'%')
+            </if>
+            <if test="user.password != null">
+                and t1.password = #{user.password}
+            </if>
+            <if test="user.phone != null">
+                and t1.phone like concat('%',#{user.phone},'%')
+            </if>
+            <if test="user.salt != null">
+                and t1.salt = #{user.salt}
+            </if>
+            <if test="user.status != null">
+                and t1.status = #{user.status}
+            </if>
+            <if test="user.isValid != null">
+                and t1.is_valid = #{user.isValid}
+            </if>
+            <if test="user.createDate != null">
+                and t1.create_date = #{user.createDate}
+            </if>
+            <if test="user.createUser != null">
+                and t1.create_user = #{user.createUser}
+            </if>
+            <if test="user.updateDate != null">
+                and t1.update_date = #{user.updateDate}
+            </if>
+            <if test="user.updateUser != null">
+                and t1.update_user = #{user.updateUser}
+            </if>
+            <if test="user.roleId != null">
+                and t3.id = #{user.roleId}
+            </if>
+        </where>
+    </select>
+
+    <select id="listUsersByPage" resultMap="userMap">
+        select
+        t1.id as id,
+        t1.username as username,
+        t1.sex as sex,
+        t1.email as email,
+        t1.password as password,
+        t1.phone as phone,
+        t1.salt as salt,
+        t1.status as status,
+        t1.is_valid as isValid,
+        t1.create_date as createDate,
+        t1.create_user as createUser,
+        t1.update_date as updateDate,
+        t1.update_user as updateUser,
+        t3.id as roleId,
+        t3.role_name as roleName,
+        t3.description as roleDescription,
+        t3.status as roleStatus
+        from (select * from <include refid="table_name"></include> where is_valid = 1) t1
+        left join (select * from sys_user_role where is_valid = 1) t2 on t1.id = t2.user_id
+        left join (select * from sys_role where is_valid = 1) t3 on t2.role_id = t3.id
+        <where>
+        <!--<trim prefix="where" prefixOverrides="and | or">-->
+            <if test="user.id != null">
+                and t1.id like concat('%',#{user.id},'%')
+            </if>
+            <if test="user.username != null">
+                and t1.username like concat('%',#{user.username},'%')
+            </if>
+            <if test="user.sex != null">
+                and t1.sex = #{user.sex}
+            </if>
+            <if test="user.email != null">
+                and t1.email like concat('%',#{user.email},'%')
+            </if>
+            <if test="user.password != null">
+                and t1.password = #{user.password}
+            </if>
+            <if test="user.phone != null">
+                and t1.phone like concat('%',#{user.phone},'%')
+            </if>
+            <if test="user.salt != null">
+                and t1.salt = #{user.salt}
+            </if>
+            <if test="user.status != null">
+                and t1.status = #{user.status}
+            </if>
+            <if test="user.isValid != null">
+                and t1.is_valid = #{user.isValid}
+            </if>
+            <if test="user.createDate != null">
+                and t1.create_date = #{user.createDate}
+            </if>
+            <if test="user.createUser != null">
+                and t1.create_user = #{createUser}
+            </if>
+            <if test="user.updateDate != null">
+                and t1.update_date = #{user.updateDate}
+            </if>
+            <if test="user.updateUser != null">
+                and t1.update_user = #{user.updateUser}
+            </if>
+            <if test="user.roleId != null">
+                and t3.id = #{user.roleId}
+            </if>
+        <!--</trim>-->
+        </where>
+        <if test="pageBean.begin != null">
+            limit #{pageBean.begin} , #{pageBean.pageSize}
+        </if>
+    </select>
+
+</mapper>
+

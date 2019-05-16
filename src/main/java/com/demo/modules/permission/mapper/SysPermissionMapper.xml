@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.modules.permission.dao.SysPermissionDao">
+    <!--表名-->
+    <sql id="table_name">sys_permission</sql>
+
+    <!--插入字段集合-->
+    <sql id="Base_Column_List">
+        id, 
+        permission_name, 
+        parent_id, 
+        permission_url, 
+        sequence, 
+        permission_icon, 
+        is_valid, 
+        create_date, 
+        create_user, 
+        update_date, 
+        update_user
+    </sql>
+    <!--查询字段集合-->
+    <sql id="Base_Column_List_AsType">
+        id as id, 
+        permission_name as permissionName, 
+        parent_id as parentId, 
+        permission_url as permissionUrl, 
+        sequence as sequence, 
+        permission_icon as permissionIcon, 
+        is_valid as isValid, 
+        create_date as createDate, 
+        create_user as createUser, 
+        update_date as updateDate, 
+        update_user as updateUser
+    </sql>
+
+    <!-- 权限菜单管理map -->
+    <resultMap id="permissionMap" type="com.demo.modules.per.model.SysPermissionVo">
+        <id property="id" column="id"></id>
+        <result property="permissionName" column="permissionName"></result>
+        <result property="parentId" column="parentId"></result>
+        <collection property="children" ofType="com.demo.modules.per.model.SysPermissionVo">
+            <id property="id" column="childId"></id>
+            <result property="permissionName" column="childPermissionName"></result>
+            <result property="parentId" column="childParentId"></result>
+        </collection>
+    </resultMap>
+
+    <!-- 角色菜单配置 -->
+    <resultMap id="rolePermissionMap" type="com.demo.modules.per.model.SysPermissionVo">
+        <id property="id" column="id"></id>
+        <result property="permissionName" column="permissionName"></result>
+        <result property="parentId" column="parentId"></result>
+        <result property="permissionUrl" column="permissionUrl"></result>
+        <result property="sequence" column="sequence"></result>
+        <result property="permissionIcon" column="permissionIcon"></result>
+        <collection property="children" ofType="com.demo.modules.per.model.SysPermissionVo" select="listAllPermissionsByParentId" column="id"></collection>
+    </resultMap>
+
+    <!-- 增加一个实体 -->
+    <insert id="insert" parameterType="com.demo.modules.permission.entity.SysPermission">
+        <!-- 针对mysql使用-->
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into <include refid="table_name" />
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="permissionName != null">
+                permission_name,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="permissionUrl != null">
+                permission_url,
+            </if>
+            <if test="sequence != null">
+                sequence,
+            </if>
+            <if test="permissionIcon != null">
+                permission_icon,
+            </if>
+            <if test="isValid != null">
+                is_valid,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="updateUser != null">
+                update_user
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="permissionName != null">
+                #{permissionName},
+            </if>
+            <if test="parentId != null">
+                #{parentId},
+            </if>
+            <if test="permissionUrl != null">
+                #{permissionUrl},
+            </if>
+            <if test="sequence != null">
+                #{sequence},
+            </if>
+            <if test="permissionIcon != null">
+                #{permissionIcon},
+            </if>
+            <if test="isValid != null">
+                #{isValid},
+            </if>
+            <if test="createDate != null">
+                #{createDate},
+            </if>
+            <if test="createUser != null">
+                #{createUser},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser}
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键删除一个实体 -->
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from <include refid="table_name" />
+        where id = #{id}
+    </delete>
+
+    <!-- 更新一个实体 -->
+    <update id="update" parameterType="com.demo.modules.permission.entity.SysPermission">
+        update <include refid="table_name" />
+        set
+        <if test="permissionName != null">
+            permission_name = #{permissionName},
+        </if>
+        <if test="parentId != null">
+            parent_id = #{parentId},
+        </if>
+        <if test="permissionUrl != null">
+            permission_url = #{permissionUrl},
+        </if>
+        <if test="sequence != null">
+            sequence = #{sequence},
+        </if>
+        <if test="permissionIcon != null">
+            permission_icon = #{permissionIcon},
+        </if>
+        <if test="isValid != null">
+            is_valid = #{isValid},
+        </if>
+        <if test="createDate != null">
+            create_date = #{createDate},
+        </if>
+        <if test="createUser != null">
+            create_user = #{createUser},
+        </if>
+        <if test="updateDate != null">
+            update_date = #{updateDate},
+        </if>
+        <if test="updateUser != null">
+            update_user = #{updateUser}
+        </if>
+        where id = #{id}
+    </update>
+
+    <!-- 根据主键查询一个实体 -->
+    <select id="queryOne" parameterType="java.lang.Long"  resultType="com.demo.modules.permission.entity.SysPermission">
+        select
+        <include refid="Base_Column_List_AsType" />
+        from <include refid="table_name" />
+        where id = #{id}
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="queryAll" resultType="com.demo.modules.permission.entity.SysPermission">
+        select
+        <include refid="Base_Column_List_AsType" />
+        from <include refid="table_name" />
+        where is_valid = '1'
+    </select>
+
+    <!-- 根据字段查询 带分页 -->
+    <select id="queryByFieldsAndPage" resultType="com.demo.modules.permission.entity.SysPermission">
+        select
+        <include refid="Base_Column_List_AsType" />
+        from <include refid="table_name" />
+        where is_valid = '1'
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="permissionName != null">
+            and permission_name = #{permissionName}
+        </if>
+        <if test="parentId != null">
+            and parent_id = #{parentId}
+        </if>
+        <if test="permissionUrl != null">
+            and permission_url = #{permissionUrl}
+        </if>
+        <if test="sequence != null">
+            and sequence = #{sequence}
+        </if>
+        <if test="permissionIcon != null">
+            and permission_icon = #{permissionIcon}
+        </if>
+        <if test="isValid != null">
+            and is_valid = #{isValid}
+        </if>
+        <if test="createDate != null">
+            and create_date = #{createDate}
+        </if>
+        <if test="createUser != null">
+            and create_user = #{createUser}
+        </if>
+        <if test="updateDate != null">
+            and update_date = #{updateDate}
+        </if>
+        <if test="updateUser != null">
+            and update_user = #{updateUser}
+        </if>
+        <if test="SysPermission != null">
+            limit #{pageBean.limitOffset} , #{pageBean.pageSize}
+        </if>
+    </select>
+    <select id="queryMaxSequence" resultType="java.lang.Integer">
+        select max(sequence)
+        from sys_permission
+        where is_valid = 1
+        and parent_id = #{parentId}
+    </select>
+    <select id="queryByPermissionIds" resultType="com.demo.modules.permission.entity.SysPermission">
+        select <include refid="Base_Column_List_AsType"></include>
+        from <include refid="table_name"></include>
+        where is_valid = 1
+        and permission_url is not null
+        and permission_url !=''
+        and id in
+        <foreach collection="permissionIds" item="permissionId" open="(" close=")" separator=",">
+            #{permissionId}
+        </foreach>
+    </select>
+
+    <!-- 根据父id查询权限菜单 -->
+    <select id="queryPermissionByParentId" resultMap="permissionMap">
+        select
+            t1.id as id,
+            t1.permission_name as permissionName,
+            t1.parent_id as parentId,
+            t2.id as childId,
+            t2.permission_name as childPermissionName,
+            t2.parent_id as childParentId
+        from sys_permission t1
+        left join (select * from sys_permission where is_valid = 1 ) t2 on t1.id = t2.parent_id
+        where t1.is_valid = 1
+        and t1.parent_id = #{parentId}
+    </select>
+
+    <!-- 获取多级菜单 -->
+    <select id="listAllPermissionsByParentId" resultMap="rolePermissionMap">
+        select
+            id as id,
+            permission_name as permissionName,
+            parent_id as parentId,
+            permission_url as permissionUrl,
+            sequence as sequence,
+            permission_icon as permissionIcon
+        from sys_permission
+        where is_valid = 1
+        and parent_id = #{parentId}
+        order by sequence asc,create_date asc,id asc
+    </select>
+
+    <!-- 获取子菜单个数 -->
+    <select id="countChildrenByParentId" resultType="java.lang.Integer">
+        select count(1)
+        from <include refid="table_name"></include>
+        where is_valid = 1 and parent_id = #{parentId}
+    </select>
+
+</mapper>
+

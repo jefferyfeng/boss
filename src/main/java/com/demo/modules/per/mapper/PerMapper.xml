@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.modules.per.dao.PerDao">
+    <update id="deleteUsers">
+        update sys_user set is_valid = 0,update_user = #{userId},update_date = #{updateDate}
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+    <update id="updateUserStatus">
+        update sys_user set status = #{status},update_user = #{userId},update_date = #{updateDate}
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+    <update id="updateRoleStatus">
+        update sys_role set status = #{status},update_user = #{userId},update_date = #{updateDate}
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+    <update id="batchDelete">
+        update sys_role set is_valid = 0,update_user = #{userId},update_date = #{updateDate}
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+    <update id="batchDeleteUserRole">
+        update sys_user_role
+        set is_valid = 0,
+        update_user = #{userId},
+        update_date = #{updateDate}
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="deletePermissionRole">
+        update sys_role_permission
+        set is_valid = 1
+        where permission_id = #{permissionId}
+    </update>
+    <update id="deleteRolePermission">
+        update sys_role_permission
+        set is_valid = 1
+        where role_id in
+        <foreach collection="ids" open="(" close=")" item="roleId" separator=",">
+            #{roleId}
+        </foreach>
+    </update>
+
+    <select id="queryPermissionByUserName" resultType="java.lang.Long">
+        select distinct(sp.id)
+        from sys_user su
+        left join sys_user_role sur on su.id = sur.user_id
+        left join sys_role sr on sur.role_id = sr.id
+        left join sys_role_permission srp on sr.id = srp.permission_id
+        left join sys_permission sp on srp.permission_id = sp.id
+        where su.is_valid = 1 and sr.is_valid = 1 and srp.is_valid = 1 and sp.is_valid = 1
+        <if test="username!=null">
+            and su.username = #{username}
+        </if>
+    </select>
+    <select id="queryPermissionByPermissionIds" resultType="com.demo.modules.permission.entity.SysPermission">
+        select id as id,
+                permission_name as permissionName,
+                parent_id as parentId,
+                permission_url as permissionUrl,
+                sequence as sequence,
+                permission_icon as permissionIcon,
+                is_valid as isValid,
+                create_date as createDate,
+                create_user as createUser,
+                update_date as updateDate,
+                update_user as updateUser
+        from sys_permission
+        where id in
+        <foreach collection="permissionIds" item="permissionId" separator="," open="(" close=")">
+            #{permissionId}
+        </foreach>
+    </select>
+    <select id="queryByUsername" resultType="com.demo.modules.per.model.UserVo">
+        select
+            id as id,
+            username as username,
+            sex as sex,
+            email as email,
+            password as password,
+            phone as phone,
+            salt as salt,
+            status as status,
+            is_valid as isValid,
+            create_date as createDate,
+            create_user as createUser,
+            update_date as updateDate,
+            update_user as updateUser
+        from sys_user
+        where is_valid = 1 and status = 1
+        <if test="username!=null">
+            and username = #{username}
+        </if>
+    </select>
+    <select id="queryPermissionsByPid" resultType="com.demo.modules.permission.entity.SysPermission">
+        select
+            id as id,
+            permission_name as permissionName,
+            parent_id as parentId,
+            permission_url as permissionUrl,
+            sequence as sequence,
+            permission_icon as permissionIcon,
+            is_valid as isValid,
+            create_date as createDate,
+            create_user as createUser,
+            update_date as updateDate,
+            update_user as updateUser
+        from sys_permission
+        where
+    </select>
+    <select id="queryRolesByUserId" resultType="com.demo.modules.per.model.RoleVo">
+        select su.id, su.role_name as roleName, su.description
+        from sys_user_role sur
+        left join sys_user su
+        where sur.is_valid = 1 and su.is_valid = 1 and su.status = 1
+        where usr.user_id = #{userId}
+    </select>
+    
+    <resultMap id="perList" type="com.demo.modules.per.model.SysPermissionVo">
+        <id property="id" column="id"></id>
+        <result property="permissionName" column="permissionName"></result>
+        <result property="parentId" column="parentId"></result>
+        <result property="permissionUrl" column="permissionUrl"></result>
+        <result property="sequence" column="sequence"></result>
+        <result property="permissionIcon" column="permissionIcon"></result>
+        <collection property="children" ofType="com.demo.modules.per.model.SysPermissionVo" select="listAllPermissionsByParentId" column="id"></collection>
+    </resultMap>
+
+    <resultMap id="perList2" type="com.demo.modules.per.model.SysPermissionVo">
+        <id property="id" column="id"></id>
+        <result property="permissionName" column="permissionName"></result>
+        <result property="parentId" column="parentId"></result>
+        <collection property="children" ofType="com.demo.modules.per.model.SysPermissionVo">
+            <id property="id" column="childId"></id>
+            <result property="permissionName" column="childPermissionName"></result>
+            <result property="parentId" column="childParentId"></result>
+        </collection>
+    </resultMap>
+
+    <resultMap id="perList3" type="com.demo.modules.per.model.SysPermissionVo">
+        <id property="id" column="id"></id>
+        <result property="permissionName" column="permissionName"></result>
+        <result property="parentId" column="parentId"></result>
+        <result property="permissionUrl" column="permissionUrl"></result>
+        <result property="sequence" column="sequence"></result>
+        <result property="permissionIcon" column="permissionIcon"></result>
+        <collection property="children" ofType="com.demo.modules.per.model.SysPermissionVo" select="listPermissions" column="id"></collection>
+    </resultMap>
+
+    <!-- 用户数据表格map -->
+    <resultMap id="userMap" type="com.demo.modules.per.model.UserVo">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="sex" column="sex"></result>
+        <result property="email" column="email"></result>
+        <!--<result property="password" column="password"></result>-->
+        <result property="phone" column="phone"></result>
+        <!--<result property="salt" column="salt"></result>-->
+        <result property="status" column="status"></result>
+        <!--<result property="isValid" column="isValid"></result>-->
+        <result property="createDate" column="createDate"></result>
+        <!--<result property="createUser" column="createUser"></result>-->
+        <!--<result property="updateDate" column="updateDate"></result>-->
+        <!--<result property="updateUser" column="updateUser"></result>-->
+        <collection property="rolesList" ofType="com.demo.modules.per.model.RoleVo">
+            <id property="id" column="roleId"></id>
+            <result property="roleName" column="roleName"></result>
+            <result property="description" column="roleDescription"></result>
+            <result property="status" column="roleStatus"></result>
+        </collection>
+    </resultMap>
+
+    <select id="listAllPermissionsByParentId" resultMap="perList">
+        select
+            id as id,
+            permission_name as permissionName,
+            parent_id as parentId,
+            permission_url as permissionUrl,
+            sequence as sequence,
+            permission_icon as permissionIcon
+        from sys_permission
+        where is_valid = 1
+        and parent_id = #{parentId}
+        order by sequence asc,create_date asc,id asc
+    </select>
+
+    <select id="queryPermissionByParentId" resultMap="perList2">
+        select
+            t1.id as id,
+            t1.permission_name as permissionName,
+            t1.parent_id as parentId,
+            t2.id as childId,
+            t2.permission_name as childPermissionName,
+            t2.parent_id as childParentId
+        from sys_permission t1
+        left join (select * from sys_permission where is_valid = 1 ) t2 on t1.id = t2.parent_id
+        where t1.is_valid = 1
+        and t1.parent_id = #{parentId}
+    </select>
+    <select id="queryPermissionsByRole" resultType="com.demo.modules.permission.entity.SysPermission">
+        select
+            t2.id as id,
+            t2.permission_name as permissionName,
+            t2.parent_id as parentId,
+            t2.permission_url as permissionUrl,
+            t2.sequence as sequence,
+            t2.permission_icon as permissionIcon
+        from sys_role_permission t1
+        left join sys_permission t2 on t1.permission_id = t2.id
+        where t1.is_valid = 1 and t2.is_valid = 1
+        and t1.role_id in
+        <foreach collection="roles" item="roleId" open="(" close=")" separator=",">
+            #{roleId}
+        </foreach>
+    </select>
+    <select id="listRolesByUserId" resultType="java.lang.Long">
+        select role_id as roleId
+        from sys_user_role
+        where is_valid = 1
+        and user_id = #{userId}
+    </select>
+    <select id="listPermissionByRoleIds" resultType="java.lang.Long">
+        select distinct permission_id as permissionId
+        from sys_role_permission
+        where is_valid = 1
+        and role_id in
+        <foreach collection="roles" item="roleId" open="(" close=")" separator=",">
+            #{roleId}
+        </foreach>
+    </select>
+
+
+    <select id="listPermissions" resultMap="perList3">
+        select
+            id as id,
+            permission_name as permissionName,
+            parent_id as parentId,
+            permission_url as permissionUrl,
+            sequence as sequence,
+            permission_icon as permissionIcon
+        from sys_permission
+        where is_valid = 1
+        and parent_id = #{parentId}
+        and id in
+        <foreach collection="permissions" item="permissionId" open="(" close=")" separator=",">
+            #{permissionId}
+        </foreach>
+        order by sequence asc,create_date asc,id asc
+    </select>
+    <select id="listPermissionsByParentId" resultType="com.demo.modules.per.model.SysPermissionVo">
+        select
+        id as id,
+        permission_name as permissionName,
+        parent_id as parentId,
+        permission_url as permissionUrl,
+        sequence as sequence,
+        permission_icon as permissionIcon
+        from sys_permission
+        where is_valid = 1
+        and parent_id = #{parentId}
+        and id in
+        <foreach collection="permissions" item="permissionId" open="(" close=")" separator=",">
+            #{permissionId}
+        </foreach>
+        order by sequence asc,create_date asc,id asc
+    </select>
+    <select id="listRoleNames" resultType="java.lang.String">
+        select GROUP_CONCAT(role_name)
+        from sys_role
+        where id in
+        <foreach collection="roles" item="roleId" open="(" close=")" separator=",">
+            #{roleId}
+      </foreach>
+    </select>
+
+    <select id="countListUsers" resultType="java.lang.Integer">
+        select count(t1.id)
+        from sys_user t1
+        left join sys_user_role t2 on t1.id = t2.user_id
+        left join sys_role t3 on t2.role_id = t3.id
+        where t1.is_valid = '1'
+        <if test="user.id != null">
+            and t1.id like concat('%',#{user.id},'%')
+        </if>
+        <if test="user.username != null">
+            and t1.username like concat('%',#{user.username},'%')
+        </if>
+        <if test="user.sex != null">
+            and t1.sex = #{user.sex}
+        </if>
+        <if test="user.email != null">
+            and t1.email like concat('%',#{user.email},'%')
+        </if>
+        <if test="user.password != null">
+            and t1.password = #{user.password}
+        </if>
+        <if test="user.phone != null">
+            and t1.phone like concat('%',#{user.phone},'%')
+        </if>
+        <if test="user.salt != null">
+            and t1.salt = #{user.salt}
+        </if>
+        <if test="user.status != null">
+            and t1.status = #{user.status}
+        </if>
+        <if test="user.isValid != null">
+            and t1.is_valid = #{user.isValid}
+        </if>
+        <if test="user.createDate != null">
+            and t1.create_date = #{user.createDate}
+        </if>
+        <if test="user.createUser != null">
+            and t1.create_user = #{user.createUser}
+        </if>
+        <if test="user.updateDate != null">
+            and t1.update_date = #{user.updateDate}
+        </if>
+        <if test="user.updateUser != null">
+            and t1.update_user = #{user.updateUser}
+        </if>
+        <if test="user.roleId != null">
+            and t3.id = #{user.roleId}
+        </if>
+    </select>
+    <select id="listUsersByPage" resultMap="userMap">
+        select
+                t1.id as id,
+                t1.username as username,
+                t1.sex as sex,
+                t1.email as email,
+                t1.password as password,
+                t1.phone as phone,
+                t1.salt as salt,
+                t1.status as status,
+                t1.is_valid as isValid,
+                t1.create_date as createDate,
+                t1.create_user as createUser,
+                t1.update_date as updateDate,
+                t1.update_user as updateUser,
+                t3.id as roleId,
+                t3.role_name as roleName,
+                t3.description as roleDescription,
+                t3.status as roleStatus
+        from sys_user t1
+        left join (select * from sys_user_role where is_valid = 1) t2 on t1.id = t2.user_id
+        left join (select * from sys_role where is_valid = 1) t3 on t2.role_id = t3.id
+        where t1.is_valid = '1'
+        <if test="user.id != null">
+            and t1.id like concat('%',#{user.id},'%')
+        </if>
+        <if test="user.username != null">
+            and t1.username like concat('%',#{user.username},'%')
+        </if>
+        <if test="user.sex != null">
+            and t1.sex = #{user.sex}
+        </if>
+        <if test="user.email != null">
+            and t1.email like concat('%',#{user.email},'%')
+        </if>
+        <if test="user.password != null">
+            and t1.password = #{user.password}
+        </if>
+        <if test="user.phone != null">
+            and t1.phone like concat('%',#{user.phone},'%')
+        </if>
+        <if test="user.salt != null">
+            and t1.salt = #{user.salt}
+        </if>
+        <if test="user.status != null">
+            and t1.status = #{user.status}
+        </if>
+        <if test="user.isValid != null">
+            and t1.is_valid = #{user.isValid}
+        </if>
+        <if test="user.createDate != null">
+            and t1.create_date = #{user.createDate}
+        </if>
+        <if test="user.createUser != null">
+            and t1.create_user = #{createUser}
+        </if>
+        <if test="user.updateDate != null">
+            and t1.update_date = #{user.updateDate}
+        </if>
+        <if test="user.updateUser != null">
+            and t1.update_user = #{user.updateUser}
+        </if>
+        <if test="user.roleId != null">
+            and t3.id = #{user.roleId}
+        </if>
+        <if test="pageBean.begin != null">
+            limit #{pageBean.begin} , #{pageBean.pageSize}
+        </if>
+    </select>
+    <select id="countListRoles" resultType="java.lang.Integer">
+        select count(id)
+        from sys_role
+        where is_valid = '1'
+        <if test="role.id != null">
+            and id like concat('%',#{role.id},'%')
+        </if>
+        <if test="role.roleName != null">
+            and role_name like concat('%',#{role.roleName},'%')
+        </if>
+        <if test="role.description != null">
+            and description like concat('%',#{role.description},'%')
+        </if>
+        <if test="role.status != null">
+            and status = #{role.status}
+        </if>
+        <if test="role.isValid != null">
+            and is_valid = #{role.isValid}
+        </if>
+        <if test="role.createDate != null">
+            and create_date = #{role.createDate}
+        </if>
+        <if test="role.createUser != null">
+            and create_user = #{role.createUser}
+        </if>
+        <if test="role.updateDate != null">
+            and update_date = #{role.updateDate}
+        </if>
+        <if test="role.updateUser != null">
+            and update_user = #{role.updateUser}
+        </if>
+    </select>
+    <select id="listRolesByPage" resultType="com.demo.modules.per.model.RoleVo">
+        select
+        id as id,
+        role_name as roleName,
+        description as description,
+        status as status,
+        is_valid as isValid,
+        create_date as createDate,
+        create_user as createUser,
+        update_date as updateDate,
+        update_user as updateUser
+        from sys_role
+        where is_valid = '1'
+        <if test="role.id != null">
+            and id like concat('%',#{role.id},'%')
+        </if>
+        <if test="role.roleName != null">
+            and role_name like concat('%',#{role.roleName},'%')
+        </if>
+        <if test="role.description != null">
+            and description like concat('%',#{role.description},'%')
+        </if>
+        <if test="role.status != null">
+            and status = #{role.status}
+        </if>
+        <if test="role.isValid != null">
+            and is_valid = #{role.isValid}
+        </if>
+        <if test="role.createDate != null">
+            and create_date = #{role.createDate}
+        </if>
+        <if test="role.createUser != null">
+            and create_user = #{role.createUser}
+        </if>
+        <if test="role.updateDate != null">
+            and update_date = #{role.updateDate}
+        </if>
+        <if test="role.updateUser != null">
+            and update_user = #{role.updateUser}
+        </if>
+        <if test="pageBean.begin != null">
+            limit #{pageBean.begin} , #{pageBean.pageSize}
+        </if>
+    </select>
+    <select id="queryUser" resultMap="userMap">
+        select
+            t1.id as id,
+            t1.username as username,
+            t1.sex as sex,
+            t1.email as email,
+            t1.password as password,
+            t1.phone as phone,
+            t1.salt as salt,
+            t1.status as status,
+            t1.is_valid as isValid,
+            t1.create_date as createDate,
+            t1.create_user as createUser,
+            t1.update_date as updateDate,
+            t1.update_user as updateUser,
+            t3.id as roleId,
+            t3.role_name as roleName,
+            t3.description as roleDescription,
+            t3.status as roleStatus
+        from sys_user t1
+        left join sys_user_role t2 on t1.id = t2.user_id
+        left join sys_role t3 on t2.role_id = t3.id
+        where t1.is_valid = '1'
+        and t1.id = #{userId}
+    </select>
+    <select id="queryUserRoleByUserIdAndRoleId" resultType="com.demo.modules.permission.entity.SysUserRole">
+        select
+            id as id,
+            user_id as userId,
+            role_id as roleId,
+            is_valid as isValid,
+            create_date as createDate,
+            create_user as createUser,
+            update_date as updateDate,
+            update_user as updateUser
+        from sys_user_role
+        where user_id = #{userId}
+        and role_id = #{roleId}
+    </select>
+</mapper>
+

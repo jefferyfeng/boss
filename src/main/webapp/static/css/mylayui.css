@@ -1,0 +1,23 @@
+.layui-input-inline{
+	padding-right: 5px;
+	padding-bottom: 12px;
+	font-size: 12px;
+}
+.layui-form-label{
+	width: 60px;
+}
+.layui-input{
+	width: 180px;
+}
+.layui-btn-cyan{
+	background-color: #2F4056;
+}
+.layui-table-cell{
+	height:26px;
+	line-height: 26px;
+	font-size: 12px;
+}
+.layui-elem-quote{
+	padding-top : 10px;
+	padding-bottom : 10px;
+}
