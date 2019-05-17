@@ -1,5 +1,6 @@
 package com.demo.modules.permission.controller;
 
+import com.demo.core.annotation.OperateLog;
 import com.demo.core.base.BaseResult;
 import com.demo.core.base.LayuiData;
 import com.demo.core.base.PageBean;
@@ -108,6 +109,7 @@ public class SysUserController {
      * @return
      */
     @RequestMapping(value="/batchRemove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, method=RequestMethod.POST)
+    @OperateLog(description = "批量删除用户")
     public BaseResult batchRemove(@RequestParam("ids[]") Long[] ids){
         sysUserService.batchRemove(ids);
         return ResultUtil.result(ResultConstants.SUCCESS);
@@ -119,6 +121,7 @@ public class SysUserController {
      * @return
      */
     @RequestMapping(value="/batchModifyStatus", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, method=RequestMethod.POST)
+    @OperateLog(description = "批量修改用户状态")
     public BaseResult batchModifyStatus(@RequestParam("ids[]") Long[] ids, @RequestParam("status")Integer status){
         sysUserService.batchModifyStatus(ids,status);
         return ResultUtil.result(ResultConstants.SUCCESS);
@@ -156,8 +159,8 @@ public class SysUserController {
      */
     @RequestMapping("/toEditUser")
     public ModelAndView toEditUser(@Param("userId") Long userId, ModelAndView modelAndView){
-        UserVo userVo = sysUserService.queryUser(userId);
-        modelAndView.addObject("userVo",userVo);
+        SysUser sysUser = sysUserService.queryOne(userId);
+        modelAndView.addObject("userVo",sysUser);
         modelAndView.setViewName("modules/per/sysuser/sysUser_edit");
         return modelAndView;
     }
@@ -208,6 +211,7 @@ public class SysUserController {
      * @return
      */
     @RequestMapping(value="/resetPassword", produces = MediaType.APPLICATION_JSON_UTF8_VALUE ,method = RequestMethod.POST)
+    @OperateLog(description = "批量重置密码")
     public BaseResult resetPassword(@RequestParam("ids[]") Long[] ids){
         sysUserService.resetPassword(ids);
         return ResultUtil.result(ResultConstants.SUCCESS);
@@ -220,6 +224,7 @@ public class SysUserController {
      * @return
      */
     @RequestMapping(value="/batchRemoveUsers", produces = MediaType.APPLICATION_JSON_UTF8_VALUE ,method = RequestMethod.POST)
+    @OperateLog(description = "批量删除用户")
     public BaseResult batchRemoveUsers(@RequestParam("ids[]") Long[] ids){
         sysUserService.batchRemoveUsers(ids);
         return ResultUtil.result(ResultConstants.SUCCESS);
@@ -252,6 +257,7 @@ public class SysUserController {
      * @return
      */
     @RequestMapping(value="/changePwd", produces = MediaType.APPLICATION_JSON_UTF8_VALUE ,method = RequestMethod.POST)
+    @OperateLog(description = "修改密码")
     public BaseResult resetPassword(Long userId,String oldPwd,String newPwd){
         try {
             sysUserService.changePwd(userId, oldPwd, newPwd);

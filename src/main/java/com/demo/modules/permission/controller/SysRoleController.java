@@ -1,5 +1,6 @@
 package com.demo.modules.permission.controller;
 
+import com.demo.core.annotation.OperateLog;
 import com.demo.core.base.BaseResult;
 import com.demo.core.base.LayuiData;
 import com.demo.core.base.PageBean;
@@ -77,6 +78,7 @@ public class SysRoleController {
      * @return
      */
     @RequestMapping("/batchModifyStatus")
+    @OperateLog(description = "修改角色状态")
     public BaseResult batchModifyStatus(@RequestParam("ids[]") Long[] ids,@RequestParam(value = "status",required = true)Integer status){
         sysRoleService.batchModifyStatus(ids,status);
         return ResultUtil.result(ResultConstants.SUCCESS);
@@ -87,6 +89,7 @@ public class SysRoleController {
      * @return
      */
     @RequestMapping("/batchRemoveRoles")
+    @OperateLog(description = "批量删除角色")
     public BaseResult batchRemoveRoles(@RequestParam("ids[]") Long[] ids){
         sysRoleService.batchRemoveRoles(ids);
         return ResultUtil.result(ResultConstants.SUCCESS);

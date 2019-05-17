@@ -422,9 +422,7 @@
             </if>
         <!--</trim>-->
         </where>
-        <if test="pageBean.begin != null">
-            limit #{pageBean.begin} , #{pageBean.pageSize}
-        </if>
+        order by t1.id
     </select>
 
 </mapper>

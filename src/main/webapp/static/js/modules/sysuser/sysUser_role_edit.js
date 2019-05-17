@@ -14,7 +14,7 @@ layui.use(['form','layer','table','laytpl'],function(){
     var tableIns = table.render({
         elem: '#roleList',
         url : contextPath + '/sysUserRole/listUserRoles?userId='+ userId,
-        cellMinWidth : 95,
+        cellMinWidth : 50,
         page : true,
         /*height : "full-200",*/
         limits : [10,15,20,25],
@@ -36,7 +36,7 @@ layui.use(['form','layer','table','laytpl'],function(){
             {field: 'roleName', title: '角色名称', minWidth:100, align:"center"},
             {field: 'description', title: '角色描述', minWidth:100, align:"center"},
             /*{field: 'createDate', title: '创建时间', minWidth:200, align:'center'},*/
-            {field: 'status', title: '角色状态',  align:'center',templet:function(data){ return formatStatus(data.status); }},
+            {field: 'status', title: '角色状态', minWidth:100, align:'center',templet:function(data){ return formatStatus(data.status); }},
         ]]
     });
 

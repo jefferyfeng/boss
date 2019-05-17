@@ -86,7 +86,7 @@ public interface SysUserDao {
     List<UserVo> listUsersByPage(@Param("user") UserVo user, @Param("pageBean") PageBean pageBean);
 
     /**
-     * 查询
+     * 查询用户
      * @param userId
      * @return
      */

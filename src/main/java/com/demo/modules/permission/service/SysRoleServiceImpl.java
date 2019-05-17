@@ -112,7 +112,6 @@ public class SysRoleServiceImpl implements SysRoleService{
      */
     @Override
     public List<RoleVo> listRolesByPage(RoleVo role, PageBean pageBean) {
-        pageBean.setAll(sysRoleDao.countListRoles(role));
         return sysRoleDao.listRolesByPage(role,pageBean);
     }
 

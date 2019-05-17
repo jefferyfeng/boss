@@ -14,7 +14,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css" media="all" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static//css/public.css" media="all" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/public.css" media="all" />
 </head>
 <body class="childrenBody">
 	<blockquote class="layui-elem-quote">

@@ -207,8 +207,6 @@ public class SysUserServiceImpl implements SysUserService{
      */
     @Override
     public List<UserVo> listUsersByPage(UserVo user, PageBean pageBean) {
-        //预先获取总条数
-        pageBean.setAll(sysUserDao.countListUsers(user));
         return sysUserDao.listUsersByPage(user,pageBean);
     }
 

@@ -177,9 +177,7 @@
         <if test="updateUser != null">
             and update_user = #{updateUser}
         </if>
-        <if test="pageBean.begin != null">
-            limit #{pageBean.begin} , #{pageBean.pageSize}
-        </if>
+        order by id
     </select>
 
     <!-- 批量修改状态 -->
@@ -297,9 +295,7 @@
         <if test="role.updateUser != null">
             and update_user = #{role.updateUser}
         </if>
-        <if test="pageBean.begin != null">
-            limit #{pageBean.begin} , #{pageBean.pageSize}
-        </if>
+        order by id
     </select>
 
 </mapper>

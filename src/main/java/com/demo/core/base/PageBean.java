@@ -91,7 +91,7 @@ public class PageBean implements Serializable{
         //计算每个结果
         maxPage = total % pageSize == 0 ? total / pageSize : total / pageSize +1;
         begin = (currentPage - 1) * pageSize + DB_INDEX_START;
-        end = currentPage == maxPage ? total - 1 + DB_INDEX_START : currentPage * pageSize -1 + DB_INDEX_START;
+        end = currentPage.equals(maxPage)  ? total - 1 + DB_INDEX_START : currentPage * pageSize -1 + DB_INDEX_START;
         pageCount = end - begin + 1;
     }
 }

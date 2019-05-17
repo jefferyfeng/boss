@@ -103,7 +103,7 @@ layui.use(['form','layer','table','laytpl'],function(){
             layerBoxTable({
                 title : '配置角色',
                 url : contextPath + "/sysUser/toUserRoleEdit?userId="+data.id,
-                area : ['900px','550px']
+                area : ['1250px','700px']
             })
         }
     });

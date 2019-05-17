@@ -1,5 +1,7 @@
 package com.demo.core.base;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * 基础类，所有pojo都要继承
  *
@@ -15,6 +17,7 @@ public class BasePojo implements java.io.Serializable{
 	/**
 	 * 分页类
 	 */
+	@JsonIgnore
 	private PageBean pageBean;
 
 	public PageBean getPageBean() {

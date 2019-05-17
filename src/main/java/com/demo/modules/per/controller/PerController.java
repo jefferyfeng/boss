@@ -1,5 +1,6 @@
 package com.demo.modules.per.controller;
 
+import com.demo.core.annotation.OperateLog;
 import com.demo.core.base.BaseResult;
 import com.demo.core.constants.Constants;
 import com.demo.core.constants.ResultConstants;
@@ -79,6 +80,7 @@ public class PerController {
      * 登陆
      */
     @RequestMapping("/login")
+    @OperateLog(description = "登陆系统")
     public BaseResult login(SysUser user,String code,HttpServletRequest request){
         try {
             String sessionVerifyCode = (String) request.getSession().getAttribute(Constants.VERIFY_CODE);
@@ -109,6 +111,15 @@ public class PerController {
     @RequestMapping("/toSysLog")
     public ModelAndView toSysLog(ModelAndView modelAndView){
         modelAndView.setViewName("static/page/systemSetting/sys_log");
+        return modelAndView;
+    }
+
+    /**
+     * 跳转到图标管理
+     */
+    @RequestMapping("/toIcons")
+    public ModelAndView toIcons(ModelAndView modelAndView){
+        modelAndView.setViewName("modules/per/iconCommon");
         return modelAndView;
     }
 
