@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.modules.syslog.dao.SysLogDao">
+    <!--表名-->
+    <sql id="table_name">sys_log</sql>
+
+    <!--插入字段集合-->
+    <sql id="Base_Column_List">
+        id, 
+        user_id, 
+        username, 
+        user_roles, 
+        log_module, 
+        operation, 
+        result, 
+        is_valid, 
+        create_date, 
+        create_user, 
+        update_date, 
+        update_user
+    </sql>
+    <!--查询字段集合-->
+    <sql id="Base_Column_List_AsType">
+        id as id, 
+        user_id as userId, 
+        username as username, 
+        user_roles as userRoles, 
+        log_module as logModule, 
+        operation as operation, 
+        result as result, 
+        is_valid as isValid, 
+        create_date as createDate, 
+        create_user as createUser, 
+        update_date as updateDate, 
+        update_user as updateUser
+    </sql>
+
+    <!-- 增加一个实体 -->
+    <insert id="insert" parameterType="com.demo.modules.syslog.entity.SysLog">
+        <!-- 针对mysql使用-->
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into <include refid="table_name" />
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="userRoles != null">
+                user_roles,
+            </if>
+            <if test="logModule != null">
+                log_module,
+            </if>
+            <if test="operation != null">
+                operation,
+            </if>
+            <if test="result != null">
+                result,
+            </if>
+            <if test="isValid != null">
+                is_valid,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="updateUser != null">
+                update_user
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="username != null">
+                #{username},
+            </if>
+            <if test="userRoles != null">
+                #{userRoles},
+            </if>
+            <if test="logModule != null">
+                #{logModule},
+            </if>
+            <if test="operation != null">
+                #{operation},
+            </if>
+            <if test="result != null">
+                #{result},
+            </if>
+            <if test="isValid != null">
+                #{isValid},
+            </if>
+            <if test="createDate != null">
+                #{createDate},
+            </if>
+            <if test="createUser != null">
+                #{createUser},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据主键删除一个实体 -->
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from <include refid="table_name" />
+        where id = #{id}
+    </delete>
+
+    <!-- 更新一个实体 -->
+    <update id="update" parameterType="com.demo.modules.syslog.entity.SysLog">
+        update <include refid="table_name" />
+        set
+        <trim suffixOverrides=",">
+        <if test="userId != null">
+            user_id = #{userId},
+        </if>
+        <if test="username != null">
+            username = #{username},
+        </if>
+        <if test="userRoles != null">
+            user_roles = #{userRoles},
+        </if>
+        <if test="logModule != null">
+            log_module = #{logModule},
+        </if>
+        <if test="operation != null">
+            operation = #{operation},
+        </if>
+        <if test="result != null">
+            result = #{result},
+        </if>
+        <if test="isValid != null">
+            is_valid = #{isValid},
+        </if>
+        <if test="createDate != null">
+            create_date = #{createDate},
+        </if>
+        <if test="createUser != null">
+            create_user = #{createUser},
+        </if>
+        <if test="updateDate != null">
+            update_date = #{updateDate},
+        </if>
+        <if test="updateUser != null">
+            update_user = #{updateUser},
+        </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <!-- 根据主键查询一个实体 -->
+    <select id="queryOne" parameterType="java.lang.Long"  resultType="com.demo.modules.syslog.entity.SysLog">
+        select
+        <include refid="Base_Column_List_AsType" />
+        from <include refid="table_name" />
+        where id = #{id}
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="queryAll" resultType="com.demo.modules.syslog.entity.SysLog">
+        select
+        <include refid="Base_Column_List_AsType" />
+        from <include refid="table_name" />
+        where is_valid = '1'
+    </select>
+
+    <!-- 根据字段查询 带分页 -->
+    <select id="queryByFieldsAndPage" resultType="com.demo.modules.syslog.entity.SysLog">
+        select
+        <include refid="Base_Column_List_AsType" />
+        from <include refid="table_name" />
+        where is_valid = '1'
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="userId != null">
+            and user_id = #{userId}
+        </if>
+        <if test="username != null">
+            and username = #{username}
+        </if>
+        <if test="userRoles != null">
+            and user_roles = #{userRoles}
+        </if>
+        <if test="logModule != null">
+            and log_module = #{logModule}
+        </if>
+        <if test="operation != null">
+            and operation = #{operation}
+        </if>
+        <if test="result != null">
+            and result = #{result}
+        </if>
+        <if test="isValid != null">
+            and is_valid = #{isValid}
+        </if>
+        <if test="createDate != null">
+            and create_date = #{createDate}
+        </if>
+        <if test="createUser != null">
+            and create_user = #{createUser}
+        </if>
+        <if test="updateDate != null">
+            and update_date = #{updateDate}
+        </if>
+        <if test="updateUser != null">
+            and update_user = #{updateUser}
+        </if>
+        order by id
+    </select>
+
+    <!-- 批量删除（逻辑删除） -->
+    <update id="batchRemove">
+        update <include refid="table_name"></include>
+        set
+        <trim suffixOverrides=",">
+            is_valid = 0,
+            update_date = now(),
+        </trim>
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+        #{id}
+        </foreach>
+    </update>
+
+</mapper>
+
