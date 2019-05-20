@@ -23,52 +23,45 @@
 <body class="childrenBody">
 <form class="layui-form layui-form-pane" id="searchForm">
     <div class="layui-input-inline">
-
         <lable class="layui-form-label">id: </lable>
         <div class="layui-input-block">
             <input type="text"  name="id" autocomplete="off" placeholder="id" class="layui-input" />
         </div>
     </div>
     <div class="layui-input-inline">
-
         <lable class="layui-form-label">操作用户id: </lable>
         <div class="layui-input-block">
-            <input type="text"  name="userId" autocomplete="off" placeholder="userId" class="layui-input" />
+            <input type="text"  name="userId" autocomplete="off" placeholder="操作用户id" class="layui-input" />
         </div>
     </div>
     <div class="layui-input-inline">
-
         <lable class="layui-form-label">操作用户名: </lable>
         <div class="layui-input-block">
-            <input type="text"  name="username" autocomplete="off" placeholder="username" class="layui-input" />
+            <input type="text"  name="username" autocomplete="off" placeholder="操作用户名" class="layui-input" />
         </div>
     </div>
     <div class="layui-input-inline">
-
         <lable class="layui-form-label">操作者角色: </lable>
         <div class="layui-input-block">
-            <input type="text"  name="userRoles" autocomplete="off" placeholder="userRoles" class="layui-input" />
+            <input type="text"  name="userRoles" autocomplete="off" placeholder="操作者角色" class="layui-input" />
         </div>
     </div>
     <div class="layui-input-inline">
-
         <lable class="layui-form-label">操作模块: </lable>
         <div class="layui-input-block">
-            <input type="text"  name="logModule" autocomplete="off" placeholder="logModule" class="layui-input" />
+            <input type="text"  name="logModule" autocomplete="off" placeholder="操作模块" class="layui-input" />
         </div>
     </div>
     <div class="layui-input-inline">
-
         <lable class="layui-form-label">操作内容: </lable>
         <div class="layui-input-block">
-            <input type="text"  name="operation" autocomplete="off" placeholder="operation" class="layui-input" />
+            <input type="text"  name="operation" autocomplete="off" placeholder="操作内容" class="layui-input" />
         </div>
     </div>
     <div class="layui-input-inline">
-
         <lable class="layui-form-label">操作结果: </lable>
         <div class="layui-input-block">
-            <input type="text"  name="result" autocomplete="off" placeholder="result" class="layui-input" />
+            <input type="text"  name="result" autocomplete="off" placeholder="操作结果" class="layui-input" />
         </div>
     </div>
     <div class="layui-input-inline">

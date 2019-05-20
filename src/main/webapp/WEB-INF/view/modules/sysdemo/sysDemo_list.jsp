@@ -23,31 +23,31 @@
 <body class="childrenBody">
 <form class="layui-form layui-form-pane" id="searchForm">
     <div class="layui-input-inline">
-
         <lable class="layui-form-label">id: </lable>
         <div class="layui-input-block">
             <input type="text"  name="id" autocomplete="off" placeholder="id" class="layui-input" />
         </div>
     </div>
     <div class="layui-input-inline">
-
         <lable class="layui-form-label">测试名称: </lable>
         <div class="layui-input-block">
             <input type="text"  name="demoName" autocomplete="off" placeholder="测试名称" class="layui-input" />
         </div>
     </div>
     <div class="layui-input-inline">
-
         <lable class="layui-form-label">测试时间: </lable>
         <div class="layui-input-block">
-            <input type="text"  name="demoDate" autocomplete="off" id="demoDate" placeholder="测试时间" class="layui-input" readonly />
+            <input type="text"  name="demoDate" autocomplete="off" placeholder="测试时间" class="layui-input" id="demoDate" readonly/>
         </div>
     </div>
     <div class="layui-input-inline">
-
         <lable class="layui-form-label">测试状态: </lable>
         <div class="layui-input-block">
-            <input type="text"  name="status" autocomplete="off" placeholder="测试状态" class="layui-input" />
+            <select name="status" >
+                <option value="" selected="selected">请选择状态</option>
+                <option value="0">禁用</option>
+                <option value="1">启用</option>
+            </select>
         </div>
     </div>
     <div class="layui-input-inline">

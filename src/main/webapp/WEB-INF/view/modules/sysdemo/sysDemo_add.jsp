@@ -21,28 +21,26 @@
 
 <body class="childrenBody">
 <form class="layui-form" id="addSysDemoForm" style="width:80%;">
-    <div class="layui-input-inline">
-        <div class="layui-form-item layui-row layui-col-xs12">
-            <label class="layui-form-label">测试名称</label>
-            <div class="layui-input-block">
-                <input type="text" class="layui-input" name="demoName" lay-verify="demoName" placeholder="请输入测试名称">
-            </div>
+    <div class="layui-form-item layui-row layui-col-xs12">
+        <label class="layui-form-label">测试名称</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input" name="demoName" lay-verify="demoName" placeholder="请输入测试名称"  />
         </div>
     </div>
-    <div class="layui-input-inline">
-        <div class="layui-form-item layui-row layui-col-xs12">
-            <label class="layui-form-label">测试时间</label>
-            <div class="layui-input-block">
-                <input type="text" class="layui-input" name="demoDate" lay-verify="demoDate" placeholder="请输入测试时间">
-            </div>
+    <div class="layui-form-item layui-row layui-col-xs12">
+        <label class="layui-form-label">测试时间</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input" name="demoDate" lay-verify="demoDate" placeholder="请输入测试时间" id="demoDate" readonly />
         </div>
     </div>
-    <div class="layui-input-inline">
-        <div class="layui-form-item layui-row layui-col-xs12">
-            <label class="layui-form-label">测试状态</label>
-            <div class="layui-input-block">
-                <input type="text" class="layui-input" name="status" lay-verify="status" placeholder="请输入测试状态">
-            </div>
+    <div class="layui-form-item layui-row layui-col-xs12">
+        <label class="layui-form-label">测试状态</label>
+        <div class="layui-input-block">
+            <select name="status" >
+                <option value="" selected="selected">请选择状态</option>
+                <option value="0">禁用</option>
+                <option value="1">启用</option>
+            </select>
         </div>
     </div>
 

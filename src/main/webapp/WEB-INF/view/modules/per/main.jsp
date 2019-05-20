@@ -25,13 +25,29 @@
 	<blockquote class="layui-elem-quote layui-bg-green">
 		<div id="nowTime"></div>
 	</blockquote>
-	<div class="layui-row layui-col-space10">
-		<div class="layui-col-lg6 layui-col-md12">
+	<%--<div class="layui-row layui-col-space10">--%>
+		<%--<div class="layui-col-lg6 layui-col-md12">--%>
 			<blockquote class="layui-elem-quote title">我的时间线</blockquote>
 			<div class="layui-elem-quote layui-quote-nm history_box magb0">
 				<ul class="layui-timeline">
 					<li class="layui-timeline-item">
 						<i class="layui-icon layui-timeline-axis">&#xe756;</i>
+						<div class="layui-timeline-content layui-text">
+							<div class="layui-timeline-title">
+								<h3 class="layui-inline">初版子模块页面生成　</h3>
+								<span class="layui-badge-rim layui-red">2019-05-20</span>
+							</div>
+							<ul>
+								<li>调整分页规则，采用分页拦截器，拦截dao层以Page结尾的方法</li>
+								<li>初版构建子模块，目前可构建到后台视图层</li>
+								<li>增加接口/后台开关，便于后续拆分为多模块项目</li>
+								<li>优化mybatis判断String类型参数空值问题</li>
+								<li>新增时间类型参数，以及状态参数的预生成模板</li>
+							</ul>
+						</div>
+					</li>
+					<li class="layui-timeline-item">
+						<i class="layui-icon layui-timeline-axis">&#xe63f;</i>
 						<div class="layui-timeline-content layui-text">
 							<div class="layui-timeline-title">
 								<h3 class="layui-inline">新增权限相关页面生成　</h3>
@@ -101,8 +117,8 @@
 					</li>
 				</ul>
 			</div>
-		</div>
-	</div>
+		<%--</div>--%>
+	<%--</div>--%>
 
 	<script type="text/javascript" src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/main.js"></script>

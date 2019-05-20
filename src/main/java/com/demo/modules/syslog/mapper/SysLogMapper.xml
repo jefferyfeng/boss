@@ -185,40 +185,40 @@
         <include refid="Base_Column_List_AsType" />
         from <include refid="table_name" />
         where is_valid = '1'
-        <if test="id != null">
+        <if test="id != null ">
             and id = #{id}
         </if>
-        <if test="userId != null">
+        <if test="userId != null ">
             and user_id = #{userId}
         </if>
-        <if test="username != null">
+        <if test="username != null and username != ''">
             and username = #{username}
         </if>
-        <if test="userRoles != null">
+        <if test="userRoles != null and userRoles != ''">
             and user_roles = #{userRoles}
         </if>
-        <if test="logModule != null">
+        <if test="logModule != null and logModule != ''">
             and log_module = #{logModule}
         </if>
-        <if test="operation != null">
+        <if test="operation != null and operation != ''">
             and operation = #{operation}
         </if>
-        <if test="result != null">
+        <if test="result != null and result != ''">
             and result = #{result}
         </if>
-        <if test="isValid != null">
+        <if test="isValid != null ">
             and is_valid = #{isValid}
         </if>
-        <if test="createDate != null">
+        <if test="createDate != null ">
             and create_date = #{createDate}
         </if>
-        <if test="createUser != null">
+        <if test="createUser != null ">
             and create_user = #{createUser}
         </if>
-        <if test="updateDate != null">
+        <if test="updateDate != null ">
             and update_date = #{updateDate}
         </if>
-        <if test="updateUser != null">
+        <if test="updateUser != null ">
             and update_user = #{updateUser}
         </if>
         order by id

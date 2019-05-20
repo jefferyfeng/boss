@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" isELIgnored="false" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -25,37 +26,37 @@
     <div class="layui-form-item layui-row layui-col-xs12">
         <label class="layui-form-label">操作用户id</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="userId" value="${sysLog.userId}"  lay-verify="userId" placeholder="请输入操作用户id">
+            <input type="text" class="layui-input" name="userId" value="${sysLog.userId}"  lay-verify="userId" placeholder="请输入操作用户id"/>
         </div>
     </div>
     <div class="layui-form-item layui-row layui-col-xs12">
         <label class="layui-form-label">操作用户名</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="username" value="${sysLog.username}"  lay-verify="username" placeholder="请输入操作用户名">
+            <input type="text" class="layui-input" name="username" value="${sysLog.username}"  lay-verify="username" placeholder="请输入操作用户名"/>
         </div>
     </div>
     <div class="layui-form-item layui-row layui-col-xs12">
         <label class="layui-form-label">操作者角色</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="userRoles" value="${sysLog.userRoles}"  lay-verify="userRoles" placeholder="请输入操作者角色">
+            <input type="text" class="layui-input" name="userRoles" value="${sysLog.userRoles}"  lay-verify="userRoles" placeholder="请输入操作者角色"/>
         </div>
     </div>
     <div class="layui-form-item layui-row layui-col-xs12">
         <label class="layui-form-label">操作模块</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="logModule" value="${sysLog.logModule}"  lay-verify="logModule" placeholder="请输入操作模块">
+            <input type="text" class="layui-input" name="logModule" value="${sysLog.logModule}"  lay-verify="logModule" placeholder="请输入操作模块"/>
         </div>
     </div>
     <div class="layui-form-item layui-row layui-col-xs12">
         <label class="layui-form-label">操作内容</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="operation" value="${sysLog.operation}"  lay-verify="operation" placeholder="请输入操作内容">
+            <input type="text" class="layui-input" name="operation" value="${sysLog.operation}"  lay-verify="operation" placeholder="请输入操作内容"/>
         </div>
     </div>
     <div class="layui-form-item layui-row layui-col-xs12">
         <label class="layui-form-label">操作结果</label>
         <div class="layui-input-block">
-            <input type="text" class="layui-input" name="result" value="${sysLog.result}"  lay-verify="result" placeholder="请输入操作结果">
+            <input type="text" class="layui-input" name="result" value="${sysLog.result}"  lay-verify="result" placeholder="请输入操作结果"/>
         </div>
     </div>
 

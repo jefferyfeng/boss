@@ -1,10 +1,18 @@
 //获取隐藏域的值
 var contextPath = document.getElementById('contextPath').value;
 
-layui.use(['form','layer','jquery'],function(){
+layui.use(['form','layer','jquery','laydate'],function(){
     var form = layui.form
         layer = parent.layer === undefined ? layui.layer : top.layer,
+        laydate = layui.laydate,
         $ = layui.jquery;
+
+        //初始化时间控件
+    var demoDate = laydate.render({
+        elem: '#demoDate', //指定元素
+        type: 'datetime',
+        format : 'yyyy-MM-dd HH:mm:ss'
+    });
 
     //自定义验证规则
     form.verify({

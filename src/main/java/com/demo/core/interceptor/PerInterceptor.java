@@ -11,6 +11,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -27,7 +28,6 @@ public class PerInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         temp();
-
         //校验当前用户是否登陆
         UserVo user = (UserVo) request.getSession().getAttribute("user");
         if(user == null){
@@ -58,6 +58,13 @@ public class PerInterceptor extends HandlerInterceptorAdapter {
         return true;
     }
 
+    /**
+     * @description: 登陆暂时未做，TODO   强制登陆
+     * @date: 2019/5/20 15:28
+     * @author: fdh
+     * @param: []
+     * @return: void
+     */
     public void temp(){
         SysUser sysUser = new SysUser();
         sysUser.setUsername("admin");

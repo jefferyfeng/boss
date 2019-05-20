@@ -3,15 +3,18 @@ var contextPath = document.getElementById('contextPath').value;
 
 var _tool = null;
 
-layui.use(['form','layer','table','laytpl'],function(){
+layui.use(['form','layer','table','laytpl','laydate'],function(){
     var form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         $ = layui.jquery,
         laytpl = layui.laytpl,
+        laydate = layui.laydate,
         table = layui.table;
 
-    //渲染数据表格列表
     var index = layer.load(1);
+
+    
+    //渲染数据表格列表
     var tableIns = table.render({
         elem: '#sysLogList',
         url : contextPath + '/sysLog/listSysLogs',
@@ -34,13 +37,13 @@ layui.use(['form','layer','table','laytpl'],function(){
         },
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
-            {field: 'id', title: 'id', width:200, align:"center"},
-            {field: 'userId', title: '操作用户id', width:200, align:"center"},
-            {field: 'username', title: '操作用户名', width:200, align:"center"},
-            {field: 'userRoles', title: '操作者角色', width:200, align:"center"},
-            {field: 'logModule', title: '操作模块', width:200, align:"center"},
-            {field: 'operation', title: '操作内容', width:200, align:"center"},
-            {field: 'result', title: '操作结果', width:200, align:"center"},
+            {field: 'id', title: 'id', width:200, align:"center", },
+            {field: 'userId', title: '操作用户id', width:200, align:"center", },
+            {field: 'username', title: '操作用户名', width:200, align:"center", },
+            {field: 'userRoles', title: '操作者角色', width:200, align:"center", },
+            {field: 'logModule', title: '操作模块', width:200, align:"center", },
+            {field: 'operation', title: '操作内容', width:200, align:"center", },
+            {field: 'result', title: '操作结果', width:200, align:"center", },
             {title: '操作', width:220, fixed:"right", templet:'#sysLogListBar',align:"center"}
         ]]
     });
@@ -51,7 +54,7 @@ layui.use(['form','layer','table','laytpl'],function(){
         //重新渲染数据表格
         table.reload("sysLogListTable",{
             page: {
-                currentPage : 1
+                curr : 1 //layui此处有点bug 前一步已经把curr改为currentPage了，但此处仍为curr
             },
             where: data.field,
             done : function () {

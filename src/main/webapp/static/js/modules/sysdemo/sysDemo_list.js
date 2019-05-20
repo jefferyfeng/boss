@@ -11,17 +11,16 @@ layui.use(['form','layer','table','laytpl','laydate'],function(){
         laydate = layui.laydate,
         table = layui.table;
 
-    //渲染数据表格测试列表
     var index = layer.load(1);
 
-    //初始化时间控件
-    var date = laydate.render({
+        //初始化时间控件
+    var demoDate = laydate.render({
         elem: '#demoDate', //指定元素
         type: 'datetime',
         format : 'yyyy-MM-dd HH:mm:ss'
     });
 
-    //初始化表格空间
+    //渲染数据表格测试列表
     var tableIns = table.render({
         elem: '#sysDemoList',
         url : contextPath + '/sysDemo/listSysDemos',
@@ -44,10 +43,10 @@ layui.use(['form','layer','table','laytpl','laydate'],function(){
         },
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
-            {field: 'id', title: 'id', width:200, align:"center"},
-            {field: 'demoName', title: '测试名称', width:200, align:"center"},
-            {field: 'demoDate', title: '测试时间', width:200, align:"center"},
-            {field: 'status', title: '测试状态', width:200, align:"center"},
+            {field: 'id', title: 'id', width:200, align:"center", },
+            {field: 'demoName', title: '测试名称', width:200, align:"center", },
+            {field: 'demoDate', title: '测试时间', width:200, align:"center", },
+            {field: 'status', title: '测试状态', width:200, align:"center", templet:function(data){ return formatStatus(data.status); }},
             {title: '操作', width:220, fixed:"right", templet:'#sysDemoListBar',align:"center"}
         ]]
     });
@@ -58,7 +57,7 @@ layui.use(['form','layer','table','laytpl','laydate'],function(){
         //重新渲染数据表格
         table.reload("sysDemoListTable",{
             page: {
-                currentPage : 1
+                curr : 1 //layui此处有点bug 前一步已经把curr改为currentPage了，但此处仍为curr
             },
             where: data.field,
             done : function () {
@@ -199,7 +198,7 @@ layui.use(['form','layer','table','laytpl','laydate'],function(){
                         //重新渲染数据表格
                         reloadTable();
                         if(resSuccess(result.code)){
-                            succMsg('批量启用成功！');
+                            succMsg('批量禁用成功！');
                         }else{
                             failMsg();
                         }

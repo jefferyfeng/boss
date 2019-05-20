@@ -1,11 +1,13 @@
 //获取隐藏域的值
 var contextPath = document.getElementById('contextPath').value;
 
-layui.use(['form','layer','jquery'],function(){
+layui.use(['form','layer','jquery','laydate'],function(){
     var form = layui.form
         layer = parent.layer === undefined ? layui.layer : top.layer,
+        laydate = layui.laydate,
         $ = layui.jquery;
 
+    
     //自定义验证规则
     form.verify({
 

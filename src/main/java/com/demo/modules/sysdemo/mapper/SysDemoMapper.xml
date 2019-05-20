@@ -152,31 +152,31 @@
         <include refid="Base_Column_List_AsType" />
         from <include refid="table_name" />
         where is_valid = '1'
-        <if test="id != null">
+        <if test="id != null ">
             and id = #{id}
         </if>
-        <if test="demoName != null">
+        <if test="demoName != null and demoName != ''">
             and demo_name = #{demoName}
         </if>
-        <if test="demoDate != null">
+        <if test="demoDate != null ">
             and demo_date = #{demoDate}
         </if>
-        <if test="status != null">
+        <if test="status != null ">
             and status = #{status}
         </if>
-        <if test="isValid != null">
+        <if test="isValid != null ">
             and is_valid = #{isValid}
         </if>
-        <if test="createDate != null">
+        <if test="createDate != null ">
             and create_date = #{createDate}
         </if>
-        <if test="createUser != null">
+        <if test="createUser != null ">
             and create_user = #{createUser}
         </if>
-        <if test="updateDate != null">
+        <if test="updateDate != null ">
             and update_date = #{updateDate}
         </if>
-        <if test="updateUser != null">
+        <if test="updateUser != null ">
             and update_user = #{updateUser}
         </if>
         order by id
