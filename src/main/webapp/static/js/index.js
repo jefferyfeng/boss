@@ -153,8 +153,15 @@ layui.use(['bodyTab','form','element','layer','jquery'],function(){
 		window.sessionStorage.removeItem("menu");
 		window.sessionStorage.removeItem("curmenu");
 	}
-	
-	//捐赠按钮
+
+	//搜索菜单 页面级
+    if(!!window.ActiveXObject){
+        document.getElementById("searchPermission").onpropertychange = searchPermission;
+    }else{
+        document.getElementById("searchPermission").addEventListener("input",searchPermission,false);
+    }
+
+    //捐赠按钮
     $('#donation').on('click',function () {
         donation();
     })
@@ -188,4 +195,19 @@ function showImg(){
             anim: 5
         });
     });
+}
+
+//搜索菜单 TODO
+function searchPermission() {
+    var input = $('#searchPermission').val();
+    var permissions = $('.navBar').find('.layui-nav-item');
+    permissions.each(function (index,permission) {
+        if(index != 0){
+            //菜单名称串
+            var permissionNames = $(permission).context.textContent + '';
+            if(permissionNames.indexOf(input) >= 0){
+                $(permission).addClass("layui-nav-itemed").siblings().removeClass("layui-nav-itemed");
+            }
+        }
+    })
 }
