@@ -255,7 +255,7 @@
     </select>
 
     <!-- 获取角色列表 -->
-    <select id="listRolesByPage" resultType="com.demo.modules.per.model.RoleVo">
+    <select id="listRolesByPage" resultType="com.demo.modules.permission.entity.SysRole">
         select
         id as id,
         role_name as roleName,

@@ -1,5 +1,10 @@
 package com.demo.core.base;
 
+/**
+ * @description:  LayuiDataVo
+ * @date: 2019/5/21 13:11
+ * @author: fdh
+ */
 public class LayuiData {
     private Integer code;
     private String msg;

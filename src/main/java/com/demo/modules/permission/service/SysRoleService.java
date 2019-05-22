@@ -55,7 +55,7 @@ public interface SysRoleService {
      * @param pageBean 分页条件
      * @return
      */
-    List<RoleVo> listRolesByPage(RoleVo role, PageBean pageBean);
+    List<SysRole> listRolesByPage(SysRole role, PageBean pageBean);
 
     /**
      * 批量修改状态

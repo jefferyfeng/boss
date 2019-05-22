@@ -65,7 +65,7 @@ public interface SysRoleDao {
      * @param pageBean
      * @return
      */
-    List<RoleVo> listRolesByPage(@Param("role")RoleVo role, @Param("pageBean") PageBean pageBean);
+    List<SysRole> listRolesByPage(@Param("role")SysRole role, @Param("pageBean") PageBean pageBean);
 
     /**
      * 批量修改状态

@@ -153,10 +153,10 @@ public class SysRoleController {
      * @return
      */
     @RequestMapping("/listRoles")
-    public LayuiData listRoles(RoleVo role, PageBean pageBean){
+    public LayuiData listRoles(SysRole role, PageBean pageBean){
         LayuiData layuiData = new LayuiData();
         try {
-            List<RoleVo> rolesList = sysRoleService.listRolesByPage(role,pageBean);
+            List<SysRole> rolesList = sysRoleService.listRolesByPage(role,pageBean);
             layuiData.setCode(0);
             layuiData.setMsg("成功!");
             layuiData.setCount(pageBean.getTotal());

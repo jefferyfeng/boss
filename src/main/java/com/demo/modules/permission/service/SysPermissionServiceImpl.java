@@ -109,6 +109,11 @@ public class SysPermissionServiceImpl implements SysPermissionService{
         return sysPermissionDao.queryByFieldsAndPage(sysPermission);
     }
 
+    /**
+     * 查询当前parentId下最大的次序id
+     * @param parentId
+     * @return
+     */
     @Override
     public Integer queryMaxSequence(Long parentId) {
         return sysPermissionDao.queryMaxSequence(parentId);
